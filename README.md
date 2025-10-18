@@ -9,6 +9,7 @@ SAE Architecture Image Source: https://www.goodfire.ai/research/understanding-an
 
 Our results show that by encoding the activations of emoji prompts in layer 24 (and other layers), decoding the top 3 high activations in sparse space back to activation space, and boosting these activations we obtain emoji-specific next tokens in non-emoji related prompts:
 ![results SAE](SAE_result.png)
+(Underlined are the generated tokens before and after the modification)
 
 ## Features
 - Simple web UI to enter a prompt and view multiple generations.
