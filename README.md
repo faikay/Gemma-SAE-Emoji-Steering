@@ -1,6 +1,14 @@
 # Gemma Emoji SAE Steering
 
 Interactive demo for the IEnAI project fair, showcasing sparse autoencoder (SAE) feature steering on a Gemma-2 model. A small Flask app serves a simple UI where you can enter a prompt and compare generations “with tweak” (SAE-steered) vs “without tweak”. The SAE steering nudges the model along selected latent directions discovered via `sae_lens`. The repo contains plots used in the final poster, and the actual notebook used to research the SAE latents
+SAE
+## Figures
+In the following figure the core concept of the repo is explained:
+![Explanation SAE](SAE.png)
+SAE Architecture Image Source: https://www.goodfire.ai/research/understanding-and-steering-llama-3
+
+Our results show that by encoding the activations of emoji prompts in layer 24 (and other layers), decoding the top 3 high activations in sparse space back to activation space, and boosting these activations we obtain emoji-specific next tokens in non-emoji related prompts:
+![results SAE](SAE_result.png)
 
 ## Features
 - Simple web UI to enter a prompt and view multiple generations.
@@ -53,11 +61,8 @@ Note: The code loads `gemma-2-2b` via `HookedSAETransformer` and a pretrained SA
 - These selected latents seem to empirically overlap with the concept "emoji", as they push the model to generate emoji tokens.
 - The UI calls `/generate` to get multiple samples with and without steering for quick qualitative comparison.
 
-## Notes and Tips
-- Model load can be heavy; first run will download weights.
-- Steering strength is controlled in `app.py` via `steering_coefficient` and the chosen `latent_idx` list. Tweak to taste.
-- Apple Silicon: the code uses `mps` if available. For CUDA, ensure the correct PyTorch build is installed.
-- If you only want to try the UI without the notebook, you can ignore `SAE.ipynb` and the PNGs.
+## Note
+- Steering strength is controlled in `app.py` via `steering_coefficient` and the chosen `latent_idx` list. Higher vals will ensure emojis will be generated, at the cost of less legible sentences.
 
 ## Acknowledgements
 - Built on top of `sae_lens` and `transformer-lens`.
